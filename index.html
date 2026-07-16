@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPraga Control | Controle de Pragas Urbanas</title>
+<style>
+  :root {
+    --verde-escuro: #0b3d2e;
+    --verde: #16794e;
+    --azul-escuro: #0d2a4a;
+    --cinza-claro: #f4f6f5;
+    --cinza: #6b7280;
+    --branco: #ffffff;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: #1f2937;
+    background-color: var(--branco);
+    line-height: 1.6;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  header .logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  header .logo span {
+    color: #4ade80;
+  }
+
+  header nav a {
+    color: var(--branco);
+    margin-left: 1.5rem;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+  }
+
+  header nav a:hover {
+    color: #4ade80;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--verde-escuro) 100%);
+    color: var(--branco);
+    text-align: center;
+    padding: 5rem 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
+  }
+
+  .hero p {
+    font-size: 1.15rem;
+    max-width: 640px;
+    margin: 0 auto 2rem auto;
+    color: #dbe7e1;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    background-color: var(--verde);
+    color: var(--branco);
+    padding: 0.9rem 2.2rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .btn-cta:hover {
+    background-color: #12603d;
+    transform: translateY(-2px);
+  }
+
+  /* ===== SERVIÇOS ===== */
+  .servicos {
+    padding: 4rem 1.5rem;
+    background-color: var(--cinza-claro);
+  }
+
+  .servicos h2 {
+    text-align: center;
+    color: var(--azul-escuro);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .servicos > p {
+    text-align: center;
+    color: var(--cinza);
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+  }
+
+  .servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .servico-card {
+    background-color: var(--branco);
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .servico-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .servico-card .icone {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .servico-card h3 {
+    color: var(--verde-escuro);
+    margin-bottom: 0.6rem;
+    font-size: 1.2rem;
+  }
+
+  .servico-card p {
+    color: var(--cinza);
+    font-size: 0.95rem;
+  }
+
+  /* ===== ORÇAMENTO / FORMULÁRIO ===== */
+  .orcamento {
+    padding: 4rem 1.5rem;
+    background-color: var(--branco);
+  }
+
+  .orcamento h2 {
+    text-align: center;
+    color: var(--azul-escuro);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .orcamento > p {
+    text-align: center;
+    color: var(--cinza);
+    max-width: 600px;
+    margin: 0 auto 2.5rem auto;
+  }
+
+  .form-container {
+    max-width: 520px;
+    margin: 0 auto;
+    background-color: var(--cinza-claro);
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .flash {
+    max-width: 520px;
+    margin: 0 auto 1.5rem auto;
+    padding: 1rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    display: none;
+  }
+
+  .flash.mostrar {
+    display: block;
+  }
+
+  .flash-sucesso {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #34d399;
+  }
+
+  .flash-erro {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #f87171;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.92rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background-color: var(--branco);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--verde);
+  }
+
+  .form-container .btn-cta {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background-color: var(--azul-escuro);
+    color: #cbd5e1;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  footer .contato {
+    margin-bottom: 0.8rem;
+  }
+
+  footer .contato span {
+    margin: 0 0.8rem;
+    display: inline-block;
+  }
+
+  footer .copyright {
+    color: #94a3b8;
+    margin-top: 0.5rem;
+  }
+
+  /* ===== RESPONSIVO ===== */
+  @media (max-width: 600px) {
+    header {
+      flex-direction: column;
+      gap: 0.8rem;
+      text-align: center;
+    }
+
+    header nav a {
+      margin: 0 0.6rem;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    .form-container {
+      padding: 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Eco<span>Praga</span> Control</div>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#orcamento">Orçamento</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Proteja seu imóvel com quem entende de Controle de Pragas</h1>
+    <p>Soluções seguras, técnicas e eficazes em Desinsetização, Desratização, Descupinização e Sanitização para residências e empresas.</p>
+    <a href="#orcamento" class="btn-cta">Solicitar Orçamento</a>
+  </section>
+
+  <section class="servicos" id="servicos">
+    <h2>Nossos Serviços</h2>
+    <p>Atendimento técnico especializado, com produtos registrados na ANVISA e conformidade com a RDC 52/2009.</p>
+    <div class="servicos-grid">
+      <div class="servico-card">
+        <div class="icone">🪳</div>
+        <h3>Desinsetização</h3>
+        <p>Controle de baratas, formigas, pulgas e outros insetos urbanos com Manejo Integrado de Pragas.</p>
+      </div>
+      <div class="servico-card">
+        <div class="icone">🐀</div>
+        <h3>Desratização</h3>
+        <p>Eliminação e prevenção de roedores com iscagem segura e bloqueio de pontos de acesso.</p>
+      </div>
+      <div class="servico-card">
+        <div class="icone">🪵</div>
+        <h3>Descupinização</h3>
+        <p>Tratamento preventivo e corretivo contra cupins subterrâneos e de madeira seca.</p>
+      </div>
+      <div class="servico-card">
+        <div class="icone">🧴</div>
+        <h3>Sanitização</h3>
+        <p>Higienização e desinfecção de ambientes, reduzindo agentes patogênicos e odores.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="orcamento" id="orcamento">
+    <h2>Solicite seu Orçamento</h2>
+    <p>Preencha os dados abaixo e você será direcionado ao nosso WhatsApp com a mensagem já pronta.</p>
+
+    <div id="flash" class="flash"></div>
+
+    <div class="form-container">
+      <form id="form-orcamento">
+        <div class="form-group">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+        </div>
+
+        <div class="form-group">
+          <label for="whatsapp">WhatsApp</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required>
+        </div>
+
+        <div class="form-group">
+          <label for="tipo_imovel">Tipo de Imóvel</label>
+          <select id="tipo_imovel" name="tipo_imovel" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="Residencial">Residencial</option>
+            <option value="Comercial">Comercial</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="praga_alvo">Praga Alvo</label>
+          <select id="praga_alvo" name="praga_alvo" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="Baratas">Baratas</option>
+            <option value="Formigas">Formigas</option>
+            <option value="Ratos">Ratos</option>
+            <option value="Cupins">Cupins</option>
+            <option value="Escorpioes">Escorpiões</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-cta">Enviar Solicitação</button>
+      </form>
+    </div>
+  </section>
+
+  <footer id="contato">
+    <div class="contato">
+      <span>📍 Rua das Palmeiras, 123 — São Paulo/SP</span>
+      <span>📞 (62) 99629-5173</span>
+      <span>✉️ contato@ecopragacontrol.com.br</span>
+    </div>
+    <div class="copyright">
+      &copy; 2026 EcoPraga Control. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script>
+    const NUMERO_WHATSAPP = "5562996295173";
+
+    const form = document.getElementById("form-orcamento");
+    const flash = document.getElementById("flash");
+
+    function mostrarFlash(mensagem, tipo) {
+      flash.textContent = mensagem;
+      flash.className = "flash mostrar flash-" + tipo;
+    }
+
+    form.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+
+      const nome = document.getElementById("nome").value.trim();
+      const whatsapp = document.getElementById("whatsapp").value.trim();
+      const tipoImovel = document.getElementById("tipo_imovel").value;
+      const pragaAlvo = document.getElementById("praga_alvo").value;
+
+      if (!nome || !whatsapp || !tipoImovel || !pragaAlvo) {
+        mostrarFlash("Por favor, preencha todos os campos corretamente.", "erro");
+        return;
+      }
+
+      const mensagem =
+        "Olá! Gostaria de solicitar um orçamento.\n" +
+        "Nome: " + nome + "\n" +
+        "WhatsApp: " + whatsapp + "\n" +
+        "Tipo de Imóvel: " + tipoImovel + "\n" +
+        "Praga Alvo: " + pragaAlvo;
+
+      const link = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensagem);
+
+      mostrarFlash("Obrigado, " + nome + "! Você será redirecionado ao WhatsApp.", "sucesso");
+      window.open(link, "_blank");
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
